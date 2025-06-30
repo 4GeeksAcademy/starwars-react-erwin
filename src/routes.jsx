@@ -9,6 +9,7 @@ import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { PersonDetail } from "./pages/PersonDetail"; // Importa la página detalle
+import { Detail } from "./js/pages/Detail.jsx";
 
 const NotFound = () => <h1>Not found!</h1>;
 
@@ -19,6 +20,7 @@ export const router = createBrowserRouter(
       <Route path="single/:theId" element={<Single />} />
       <Route path="demo" element={<Demo />} />
       <Route path="person/:uid" element={<PersonDetail />} /> {/* Nueva ruta */}
+      <Route path="/single/:theId" element={<Detail />} />
     </Route>
   )
 );
