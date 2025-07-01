@@ -5,19 +5,19 @@ export const FavoritesContext = createContext();
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
-  const addFavorite = (uid) => {
-    setFavorites((prev) => (prev.includes(uid) ? prev : [...prev, uid]));
+  const addFavorite = (item) => {
+    setFavorites((prev) => (prev.find(fav => fav.uid === item.uid) ? prev : [...prev, item]));
   };
 
   const removeFavorite = (uid) => {
-    setFavorites((prev) => prev.filter((id) => id !== uid));
+    setFavorites((prev) => prev.filter((fav) => fav.uid !== uid));
   };
 
-  const toggleFavorite = (uid) => {
-    if (favorites.includes(uid)) {
-      removeFavorite(uid);
+  const toggleFavorite = (item) => {
+    if (favorites.find(fav => fav.uid === item.uid)) {
+      removeFavorite(item.uid);
     } else {
-      addFavorite(uid);
+      addFavorite(item);
     }
   };
 
@@ -27,4 +27,5 @@ export const FavoritesProvider = ({ children }) => {
     </FavoritesContext.Provider>
   );
 };
+
 

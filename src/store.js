@@ -1,7 +1,7 @@
 export const initialStore = () => ({
   message: null,
   favorites: [],
-  entities: {},  // personajes guardados por uid
+  entities: {},
   todos: [
     { id: 1, title: "Make the bed", background: null },
     { id: 2, title: "Do my homework", background: null }
@@ -9,13 +9,24 @@ export const initialStore = () => ({
 });
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type) {
+  switch (action.type) {
     case "ADD_FAVORITE":
-      if (store.favorites.includes(action.payload)) return store;
-      return { ...store, favorites: [...store.favorites, action.payload] };
+      const exists = store.favorites.some(
+        fav => fav.uid === action.payload.uid && fav.type === action.payload.type
+      );
+      if (exists) return store;
+      return {
+        ...store,
+        favorites: [...store.favorites, action.payload]
+      };
 
     case "REMOVE_FAVORITE":
-      return { ...store, favorites: store.favorites.filter(uid => uid !== action.payload) };
+      return {
+        ...store,
+        favorites: store.favorites.filter(
+          fav => !(fav.uid === action.payload.uid && fav.type === action.payload.type)
+        )
+      };
 
     case "SET_ENTITIES":
       return {
@@ -37,4 +48,7 @@ export default function storeReducer(store, action = {}) {
       throw Error("Unknown action.");
   }
 }
+
+
+
 
